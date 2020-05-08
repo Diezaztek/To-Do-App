@@ -39,7 +39,7 @@ def log_in(req):
                                                     ,'error': 'El usuario y la contraseña no coinciden'})
         else:
             login(req, user)
-            return redirect('tasks') 
+            return redirect('tasks')
 
 def log_out(req):
     if req.method == 'POST':
