@@ -9,6 +9,10 @@
     {%if user.is_authenticated %}
     {{user.username}}
 
+    <a href="{% url 'tasks' %}">Tareas pendientes</a>
+    <a href="{% url 'completed_tasks' %}">Tareas completadas</a>
+    <a href="{% url 'create' %}">Crear nueva tarea</a>
+
     <form action="{% url 'log_out' %}" method="post">
       {% csrf_token %}
       <button type="submit">Cerrar sesión</button>

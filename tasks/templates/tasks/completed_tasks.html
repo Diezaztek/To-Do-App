@@ -1,0 +1,27 @@
+{% extends 'tasks/base.html' %}
+
+{%block header %}
+
+  Tareas terminadas
+
+{% endblock %}
+
+{%block content %}
+
+  <h1>Tareas terminadas:</h1>
+
+  <ul>
+    {% for task in tasks %}
+
+      <li>
+        <a href="{% url 'edit_task' task.id %}">{{task.name}}</a>
+      </li>
+    {% if task.description %}
+    - {{task.description}}
+    {% endif %}
+    {{ task.date_completed|date:'M j Y H:i'}}
+
+    {% endfor %}
+  </ul>
+
+{% endblock %}

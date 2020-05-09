@@ -15,8 +15,17 @@
 <form method="post">
   {% csrf_token %}
   {{form.as_p}}
-
   <button type="submit" name="button">Actualizar</button>
+</form>
+
+<form method="post" action="{% url 'complete_task' task.id %}">
+  {% csrf_token %}
+  <button type="submit" name="button">Completar</button>
+</form>
+
+<form method="post" action="{% url 'delete_task' task.id %}">
+  {% csrf_token %}
+  <button type="submit" name="button">Borrar</button>
 </form>
 
 {% endblock %}
