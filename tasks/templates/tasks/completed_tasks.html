@@ -2,13 +2,13 @@
 
 {%block header %}
 
-  Tareas pendientes
+  Tareas terminadas
 
 {% endblock %}
 
 {%block content %}
 
-  <h1>Tareas pendientes:</h1>
+  <h1>Tareas terminadas:</h1>
 
   <ul>
     {% for task in tasks %}
@@ -19,6 +19,7 @@
     {% if task.description %}
     - {{task.description}}
     {% endif %}
+    {{ task.date_completed|date:'M j Y H:i'}}
 
     {% endfor %}
   </ul>

@@ -19,6 +19,7 @@ from tasks import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.go_home, name='home'),
 
     #Auth
     path('signup/', views.sign_up, name='sign_up'),
@@ -27,5 +28,9 @@ urlpatterns = [
 
     #Tasks
     path('tasks/', views.show_current_tasks, name='tasks'),
-    path('home/', views.go_home, name='home')
+    path('completed/', views.show_completed_tasks, name='completed_tasks'),
+    path('create/', views.create_task, name='create'),
+    path('tasks/<int:task_pk>', views.edit_task, name='edit_task'),
+    path('tasks/<int:task_pk>/complete', views.complete_task, name='complete_task'),
+    path('tasks/<int:task_pk>/delete', views.delete_task, name='delete_task'),
 ]
