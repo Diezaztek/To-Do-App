@@ -1,17 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>{%block header %}{% endblock %}</title>
+  </head>
+  <body>
 
-{%if user.is_authenticated %}
-{{user.username}}
+    {%if user.is_authenticated %}
+    {{user.username}}
 
-<form action="{% url 'log_out' %}" method="post">
-  {% csrf_token %}
-  <button type="submit">Cerrar sesión</button>
-</form>
+    <form action="{% url 'log_out' %}" method="post">
+      {% csrf_token %}
+      <button type="submit">Cerrar sesión</button>
+    </form>
 
-{% else %}
+    {% else %}
 
-<a href="{% url 'log_in' %}">Iniciar sesión</a>
-<a href="{% url 'sign_up' %}">Registrarse</a>
+    <a href="{% url 'log_in' %}">Iniciar sesión</a>
+    <a href="{% url 'sign_up' %}">Registrarse</a>
 
-{% endif %}
-<br>
-{% block content %}{% endblock %}
+    {% endif %}
+    <br>
+    {% block content %}{% endblock %}
+
+  </body>
+</html>

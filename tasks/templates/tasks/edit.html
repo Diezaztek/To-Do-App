@@ -1,0 +1,22 @@
+{% extends 'tasks/base.html' %}
+
+{%block header %}
+
+  Editar
+
+{% endblock %}
+
+{%block content %}
+
+{{task.name}}
+
+{{error}}
+
+<form method="post">
+  {% csrf_token %}
+  {{form.as_p}}
+
+  <button type="submit" name="button">Actualizar</button>
+</form>
+
+{% endblock %}

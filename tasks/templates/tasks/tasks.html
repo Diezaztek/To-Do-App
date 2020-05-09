@@ -1,14 +1,26 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    {% extends 'tasks/base.html' %}
+{% extends 'tasks/base.html' %}
 
-    {%block content %}
-    Las tareas pendientes
-    {% endblock %}
-  </body>
-</html>
+{%block header %}
+
+  Tareas pendientes
+
+{% endblock %}
+
+{%block content %}
+
+  <h1>Tareas pendientes:</h1>
+
+  <ul>
+    {% for task in tasks %}
+
+      <li>
+        <a href="{% url 'edit_task' task.id %}">{{task.name}}</a>
+      </li>
+    {% if task.description %}
+    - {{task.description}}
+    {% endif %}
+
+    {% endfor %}
+  </ul>
+
+{% endblock %}

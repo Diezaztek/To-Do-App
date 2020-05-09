@@ -27,5 +27,7 @@ urlpatterns = [
 
     #Tasks
     path('tasks/', views.show_current_tasks, name='tasks'),
-    path('home/', views.go_home, name='home')
+    path('home/', views.go_home, name='home'),
+    path('create/', views.create_task, name='create'),
+    path('tasks/<int:task_pk>', views.edit_task, name='edit_task'),
 ]
