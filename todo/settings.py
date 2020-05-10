@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'todo.wsgi.application'
 }'''
 
 import dj_database_url
-form decouple import config
+from decouple import config
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=config('DATABASE_URL')
+        default=config('HEROKU_POSTGRESQL_AQUA_URL')
     )
 }
 
