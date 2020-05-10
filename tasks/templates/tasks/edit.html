@@ -8,24 +8,37 @@
 
 {%block content %}
 
-{{task.name}}
+<h1>{{task.name}}</h1>
+<h2>{{ error }}</h2>
 
-{{error}}
-
-<form method="post">
+<form class="form-group" method="post">
   {% csrf_token %}
-  {{form.as_p}}
-  <button type="submit" name="button">Actualizar</button>
-</form>
+  <p><label for="id_name">Nombre:</label> <input type="text" name="name" maxlength="100" required="" class="form-control" value="{{task.name}}"></p>
+  <p><label for="id_description">Descripción:</label> <textarea name="description" cols="40" rows="10" class="form-control">{{task.description}}</textarea></p>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" name="is_important" value="{{task.is_important}}">
+    <label class="form-check-label" for="exampleCheck1">Importante</label>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-4">
+      <form action="{% url 'complete_task' task.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Marcar como completa</button>
+      </form>
+    </div>
+    <div class="col-md-4">
+      <button type="submit" class="btn btn-info">Actualizar</button>
+    </div>
+    <div class="col-md-4">
+      <form action="{% url 'delete_task' task.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Borrar</button>
+      </form>
+    </div>
 
-<form method="post" action="{% url 'complete_task' task.id %}">
-  {% csrf_token %}
-  <button type="submit" name="button">Completar</button>
-</form>
+  </div>
 
-<form method="post" action="{% url 'delete_task' task.id %}">
-  {% csrf_token %}
-  <button type="submit" name="button">Borrar</button>
 </form>
 
 {% endblock %}
