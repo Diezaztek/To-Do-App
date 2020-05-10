@@ -11,12 +11,22 @@ You need python3 and pip3 in order to run it
 
 ### Installing
 
-For running this project on you machine git clone, install the libraries and run the server
+For running this project on you machine git clone, install the libraries
 
 ```
 git clone git@github.com:Diezaztek/Login-Template-App.git
 cd password_generator_project
 pip install -r requirements.txt
+```
+
+Change settings.py DEBUG to true
+
+```
+DEBUG = True
+```
+
+Run the server
+```
 python manage.py runserver
 ```
 
@@ -24,7 +34,7 @@ Then enter in your browser to http://localhost:8000
 
 ### Live preview
 
-https://diazaztek.pythonanywhere.com
+https://punk-tesla.herokuapp.com
 
 
 ## Built With
