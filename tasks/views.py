@@ -63,7 +63,7 @@ def go_home(req):
 
 @login_required
 def show_current_tasks(req):
-    tasks = Task.objects.filter(user = req.user, date_completed__isnull=True)
+    tasks = Task.objects.filter(user = req.user, date_completed__isnull=True).order_by('-is_important')
     return render(req, 'tasks/tasks.html', {'tasks': tasks})
 
 @login_required

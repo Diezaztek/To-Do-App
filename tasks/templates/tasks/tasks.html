@@ -16,8 +16,16 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">{{task.name}}</h5>
+            {% if task.is_important == True %}
+              <p style="font-weight:bold">Importante</p>
+            {% else %}
+              <br>
+            {% endif %}
             <hr>
-            <p class="card-text">
+            <p class="card-text" style="width:40ch;
+                                        overflow: hidden;
+                                        white-space: nowrap;
+                                        text-overflow: ellipsis;">
               {% if task.description %}
                 {{task.description}}
               {% endif %}

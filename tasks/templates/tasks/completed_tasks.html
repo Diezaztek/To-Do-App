@@ -10,18 +10,44 @@
 
   <h1>Tareas terminadas:</h1>
 
-  <ul>
-    {% for task in tasks %}
+  <div class="row">
+  {% for task in tasks %}
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{task.name}}</h5>
+          <hr>
+          <p class="card-text" style="width:40ch;
+                                      overflow: hidden;
+                                      white-space: nowrap;
+                                      text-overflow: ellipsis;">
+            {% if task.description %}
+              {{task.description}}
+            {% endif %}
+          </p>
+          <p>
+            {{task.date_completed}}
+          </p>
+          <div class="row">
+            <div class="col-md-6" align="center">
+              <a href="{% url 'edit_task' task.id %}" class="btn btn-info card-button">Ver detalles</a>
+            </div>
+            <div class="col-md-6" align="center">
+              <form class="form-group" action="{% url 'delete_task' task.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Borrar</button>
+              </form>
+            </div>
 
-      <li>
-        <a href="{% url 'edit_task' task.id %}">{{task.name}}</a>
-      </li>
-    {% if task.description %}
-    - {{task.description}}
-    {% endif %}
-    {{ task.date_completed|date:'M j Y H:i'}}
+          </div>
 
-    {% endfor %}
-  </ul>
+
+
+
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
 
 {% endblock %}

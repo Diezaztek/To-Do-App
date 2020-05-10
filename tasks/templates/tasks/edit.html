@@ -15,17 +15,33 @@
   </div>
 {% endif %}
 
-<form class="form-group" method="post">
-  {% csrf_token %}
-  <p><label for="id_name">Nombre:</label> <input type="text" name="name" maxlength="100" required="" class="form-control" value="{{task.name}}"></p>
-  <p><label for="id_description">Descripción:</label> <textarea name="description" cols="40" rows="10" class="form-control">{{task.description}}</textarea></p>
-  <div class="form-check">
-    <input type="checkbox" class="form-check-input" name="is_important" value="{{task.is_important}}">
-    <label class="form-check-label" for="exampleCheck1">Importante</label>
-  </div>
-  <br>
-  <button type="submit" class="btn btn-info">Actualizar</button>
-</form>
+{% if task.date_completed == None %}
+  <form class="form-group" method="post">
+    {% csrf_token %}
+    <p><label for="id_name">Nombre:</label> <input type="text" name="name" maxlength="100" required="" class="form-control" value="{{task.name}}"></p>
+    <p><label for="id_description">Descripción:</label> <textarea name="description" cols="40" rows="10" class="form-control">{{task.description}}</textarea></p>
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" name="is_important" value="True" {% if task.is_important == True %} checked {% endif %}>
+      <label class="form-check-label" for="exampleCheck1">Importante</label>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-info">Actualizar</button>
+  </form>
+{% else %}
+  <form class="form-group">
+    {% csrf_token %}
+    <p><label for="id_name">Nombre:</label> <input type="text" name="name" maxlength="100" required="" class="form-control" value="{{task.name}}" disabled></p>
+    <p><label for="id_description">Descripción:</label> <textarea name="description" cols="40" rows="10" class="form-control" disabled>{{task.description}}</textarea></p>
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" name="is_important" value="{{task.is_important}}" disabled>
+      <label class="form-check-label" for="exampleCheck1">Importante</label>
+    </div>
+    <br>
+    <a class="btn btn-info" href="{% url 'completed_tasks' %}">Atrás</a>
+  </form>
+
+{% endif %}
+
 
 
 
