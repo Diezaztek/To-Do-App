@@ -72,25 +72,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'todo.wsgi.application'
 
+if DEBUG:
+    # Database
+    # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+else:
+    import dj_database_url
+    from decouple import config
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#    }
-#}
-
-import dj_database_url
-from decouple import config
-
-DATABASES = {
-    'default': dj_database_url.config(
-        default=config('HEROKU_POSTGRESQL_AQUA_URL')
-    )
-}
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=config('HEROKU_POSTGRESQL_AQUA_URL')
+        )
+    }
 
 
 # Password validation
@@ -126,16 +125,19 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-STATIC_ROOT  =   os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 LOGIN_URL = '/login/'
 
-# Extra lookup directories for collectstatic to find static files
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+if !DEBUG:
+    # Static files (CSS, JavaScript, Images)
+    # https://docs.djangoproject.com/en/1.11/howto/static-files/
+    STATIC_ROOT  =   os.path.join(BASE_DIR, 'staticfiles')
 
-#  Add configuration for static files storage using whitenoise
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+    # Extra lookup directories for collectstatic to find static files
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
+    )
+
+    #  Add configuration for static files storage using whitenoise
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
