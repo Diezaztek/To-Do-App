@@ -3,14 +3,33 @@
   <head>
     <meta charset="utf-8">
     <title>Registrarse</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    {% load static %}
+    <link href="{% static 'tasks/styles/login.css' %}" rel="stylesheet">
+
   </head>
-  <body>
-    <h1>Sign up</h1>
-    <h2>{{error}}</h2>
-    <form method="post">
+  <body class="text-center">
+    <form class="form-signin" method="post">
       {% csrf_token %}
-      {{form.as_p}}
-      <button type="submit" name="button">Sign up</button>
+      <h2>Crear una cuenta</h2>
+      <br>
+      {% if error %}
+        <div class="alert alert-danger" role="alert">
+          {{error}}
+        </div>
+      {% endif %}
+      <label class="sr-only">Usuario</label>
+      <input type="text" class="form-control" placeholder="Usuario" required="" autofocus="" name="username">
+      <label class="sr-only">Contraseña</label>
+      <input type="password" class="form-control" placeholder="Contraseña" required="" name="password1">
+      <label class="sr-only">Confirmar contraseña</label>
+      <input type="password" class="form-control" placeholder="Confirmar contraseña" required="" name="password2">
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
+      <br>
+      <a href="{% url 'home' %}">Regresar a inicio</a>
+      <p>¿Ya tienes una cuenta? <a href="{% url 'log_in' %}">Inicia sesión</a></p>
     </form>
   </body>
 </html>

@@ -1,16 +1,19 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
-from .forms import TaskForm
-from .models import Task
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 
+from .forms import TaskForm
+from .models import Task
+
 def sign_up(req):
+    if req.user.is_authenticated:
+        return redirect('tasks')
+
     if req.method == 'GET':
-        return render(req, 'tasks/signup.html', {'form':UserCreationForm()})
+        return render(req, 'tasks/signup.html')
     else:
         username = req.POST['username']
         password = req.POST['password1']
@@ -24,23 +27,23 @@ def sign_up(req):
                 return redirect('tasks')
 
             except IntegrityError:
-                return render(req, 'tasks/signup.html', {'form':UserCreationForm()
-                                                        ,'error': 'El usuario ya existe, elige otro'})
+                return render(req, 'tasks/signup.html', {'error': 'El usuario ya existe, elige otro'})
         else:
-            return render(req, 'tasks/signup.html', {'form':UserCreationForm()
-                                                    ,'error': 'Las contraseñas no coinciden'})
+            return render(req, 'tasks/signup.html', {'error': 'Las contraseñas no coinciden'})
 
 
 def log_in(req):
+    if req.user.is_authenticated:
+        return redirect('tasks')
+
     if req.method == 'GET':
-        return render(req, 'tasks/login.html', {'form':AuthenticationForm()})
+        return render(req, 'tasks/login.html')
     else:
         username = req.POST['username']
         password = req.POST['password']
         user = authenticate(req, username=username, password=password)
         if user is None:
-            return render(req, 'tasks/login.html', {'form':AuthenticationForm()
-                                                    ,'error': 'El usuario y la contraseña no coinciden'})
+            return render(req, 'tasks/login.html', {'error': 'El usuario y la contraseña no coinciden'})
         else:
             login(req, user)
             return redirect('tasks')
@@ -53,17 +56,20 @@ def log_out(req):
 
 
 def go_home(req):
+    if req.user.is_authenticated:
+        return redirect('tasks')
+
     return render(req, 'tasks/home.html')
 
 @login_required
 def show_current_tasks(req):
-    tasks = Task.objects.filter(user = req.user, date_completed__isnull=True)
+    tasks = Task.objects.filter(user = req.user, date_completed__isnull=True).order_by('-is_important')
     return render(req, 'tasks/tasks.html', {'tasks': tasks})
 
 @login_required
 def create_task(req):
     if req.method == 'GET':
-        return render(req, 'tasks/create.html', {'form':TaskForm()})
+        return render(req, 'tasks/create.html')
     else:
         try:
             form = TaskForm(req.POST)
@@ -72,22 +78,21 @@ def create_task(req):
             task.save()
             return redirect('tasks')
         except:
-            return render(req, 'tasks/create.html', {'form':TaskForm()
-                                                    ,'error': 'Datos no válidos'})
+            return render(req, 'tasks/create.html', {'error': 'Datos no válidos'})
 @login_required
 def edit_task(req, task_pk):
     task = get_object_or_404(Task, pk=task_pk, user=req.user)
 
     if req.method == 'GET':
         form = TaskForm(instance=task)
-        return render(req, 'tasks/edit.html', {'task':task, 'form':form})
+        return render(req, 'tasks/edit.html', {'task':task})
     else:
         try:
             form = TaskForm(req.POST, instance=task)
             form.save()
             return redirect('tasks')
         except:
-            return render(req, 'tasks/edit.html', {'task':task, 'form':form, 'error': 'Datos no válidos'})
+            return render(req, 'tasks/edit.html', {'task':task, 'error': 'Datos no válidos'})
 
 @login_required
 def complete_task(req, task_pk):
