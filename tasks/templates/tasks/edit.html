@@ -9,7 +9,11 @@
 {%block content %}
 
 <h1>{{task.name}}</h1>
-<h2>{{ error }}</h2>
+{% if error %}
+  <div class="alert alert-danger" role="alert">
+    {{error}}
+  </div>
+{% endif %}
 
 <form class="form-group" method="post">
   {% csrf_token %}
@@ -23,15 +27,6 @@
   <button type="submit" class="btn btn-info">Actualizar</button>
 </form>
 
-<form class="form-group" action="{% url 'complete_task' task.id %}" method="post">
-  {% csrf_token %}
-  <button type="submit" class="btn btn-success">Marcar como completa</button>
-</form>
-
-<form class="form-group" action="{% url 'delete_task' task.id %}" method="post">
-  {% csrf_token %}
-  <button type="submit" class="btn btn-danger">Borrar</button>
-</form>
 
 
 {% endblock %}

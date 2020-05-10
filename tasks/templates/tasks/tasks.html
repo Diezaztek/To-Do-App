@@ -16,12 +16,35 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">{{task.name}}</h5>
+            <hr>
             <p class="card-text">
               {% if task.description %}
                 {{task.description}}
               {% endif %}
             </p>
-            <a href="{% url 'edit_task' task.id %}" class="btn btn-primary card-button">Editar</a>
+            <div class="row">
+
+              <div class="col-md-4" align="center">
+                <form class="form-group" action="{% url 'complete_task' task.id %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-success">Terminar</button>
+                </form>
+              </div>
+              <div class="col-md-4" align="center">
+                <a href="{% url 'edit_task' task.id %}" class="btn btn-info card-button">Editar</a>
+              </div>
+              <div class="col-md-4" align="center">
+                <form class="form-group" action="{% url 'delete_task' task.id %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger">Borrar</button>
+                </form>
+              </div>
+
+            </div>
+
+
+
+
           </div>
         </div>
       </div>
