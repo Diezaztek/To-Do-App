@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '!m!y=6mn=q=b0ney!do^#a_%ckb1s+geu&w$0*9l_z^!y3zy=%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['punk-tesla.herokuapp.com', 'localhost']
 
@@ -128,7 +128,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 LOGIN_URL = '/login/'
 
-if !DEBUG:
+if not DEBUG:
     # Static files (CSS, JavaScript, Images)
     # https://docs.djangoproject.com/en/1.11/howto/static-files/
     STATIC_ROOT  =   os.path.join(BASE_DIR, 'staticfiles')
