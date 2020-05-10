@@ -29,7 +29,7 @@ SECRET_KEY = '!m!y=6mn=q=b0ney!do^#a_%ckb1s+geu&w$0*9l_z^!y3zy=%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['djangotasksapp.herokuapp.com']
+ALLOWED_HOSTS = ['punk-tesla.herokuapp.com']
 
 
 # Application definition
