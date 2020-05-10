@@ -35,4 +35,4 @@ urlpatterns = [
     path('tasks/<int:task_pk>', views.edit_task, name='edit_task'),
     path('tasks/<int:task_pk>/complete', views.complete_task, name='complete_task'),
     path('tasks/<int:task_pk>/delete', views.delete_task, name='delete_task'),
-] #+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
