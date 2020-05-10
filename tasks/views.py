@@ -97,7 +97,6 @@ def edit_task(req, task_pk):
 @login_required
 def complete_task(req, task_pk):
     task = get_object_or_404(Task, pk=task_pk, user=req.user)
-    print(taks)
 
     if req.method == 'POST':
         task.date_completed = timezone.now()
